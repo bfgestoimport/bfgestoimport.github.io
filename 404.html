@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BF Gesto Import — Redirigiendo...</title>
+    <meta name="robots" content="noindex" />
+    <script>
+      // GitHub Pages 404 handler for HashRouter SPA.
+      // Si el usuario entra a bfgestoimport.com/reciclaje (sin #),
+      // redirigimos a bfgestoimport.com/#/reciclaje (con hash) y la app toma la ruta.
+      (function () {
+        var path = window.location.pathname;
+        var search = window.location.search;
+        var hash = window.location.hash;
+
+        // Base: detectamos si el sitio vive en la raíz o en subcarpeta.
+        // GitHub Pages user-site (USUARIO.github.io) sirve en raíz; project-site en subcarpeta.
+        // Tomamos el segmento inicial del path como base si parece un subdirectorio.
+        var segments = path.split("/").filter(Boolean);
+        var basePath = "/";
+        if (segments.length > 0 && /\.github\.io$/.test(window.location.hostname) === false) {
+          // No es user-site: probablemente project-site /<repo>/...
+          // Dejamos base como raíz igual — si usas project-site, cambia aquí.
+        }
+
+        var route = path === basePath ? "" : path.replace(/\/$/, "");
+        var target = basePath + "#" + (route || "/") + search + hash.replace(/^#/, "");
+
+        // Evita bucle infinito si ya redirigió
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p style="font-family: sans-serif; text-align: center; margin-top: 4rem;">
+        Redirigiendo a <a href="/">BF Gesto Import</a>...
+      </p>
+    </noscript>
+  </body>
+</html>
